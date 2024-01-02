@@ -1,6 +1,6 @@
 <?php
 session_start();
-if (!isset($_SESSION["login_admin"])) {
+if (!isset($_SESSION["login_owner"])) {
   header("location:../login.php");
 }
 
@@ -65,19 +65,19 @@ if (!isset($_SESSION["login_admin"])) {
       <li class="nav-item">
         <a class="nav-link" href="daftar_pelanggan.php">
           <i class="fas fa-fw fa-table"></i>
-          <span>Kelola Pelanggan</span></a>
+          <span>Data Pelanggan</span></a>
       </li>
       <!-- Nav Item - Kelola Produk -->
       <li class="nav-item">
         <a class="nav-link" href="daftar_produk.php">
           <i class="fas fa-fw fa-table"></i>
-          <span>Kelola Produk</span></a>
+          <span>Data Produk</span></a>
       </li>
       <!-- Nav Item - Kelola Transaksi -->
       <li class="nav-item">
         <a class="nav-link" href="daftar_transaksi.php">
           <i class="fas fa-fw fa-table"></i>
-          <span>Kelola Transaksi</span></a>
+          <span>Data Transaksi</span></a>
       </li>
 
       <!-- Divider -->
@@ -102,7 +102,7 @@ if (!isset($_SESSION["login_admin"])) {
             <!-- Nav Item - User Information -->
             <li class="nav-item dropdown no-arrow">
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Halo Admin</span>
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Halo Owner</span>
               </a>
               <!-- Dropdown - User Information -->
               <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">

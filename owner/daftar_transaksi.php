@@ -1,9 +1,12 @@
 <?php
 session_start();
-if (!isset($_SESSION["login_admin"])) {
+require "../config.php";
+if (!isset($_SESSION["login_owner"])) {
   header("location:../login.php");
 }
 
+$sql_produk = sql("SELECT * FROM transaksi INNER JOIN user ON transaksi.id_user=user.id_user ORDER BY `transaksi`.`tanggal_transaksi` DESC");
+$no = 1;
 ?>
 
 <!DOCTYPE html>
@@ -17,7 +20,7 @@ if (!isset($_SESSION["login_admin"])) {
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <link rel="shortcut icon" href="images/favicon.png" type="">
+  <link rel="shortcut icon" href="../images/favicon.png" type="">
   <title>Science Coffee</title>
 
   <!-- Custom fonts for this template-->
@@ -27,6 +30,10 @@ if (!isset($_SESSION["login_admin"])) {
 
   <!-- Custom styles for this template-->
   <link href="../sbadmin/css/sb-admin-2.min.css" rel="stylesheet">
+
+  <!-- dataTable URL -->
+  <link href="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.13.4/b-2.3.6/b-colvis-2.3.6/b-html5-2.3.6/b-print-2.3.6/datatables.min.css" rel="stylesheet" />
+
 
 </head>
 
@@ -47,7 +54,7 @@ if (!isset($_SESSION["login_admin"])) {
       <hr class="sidebar-divider my-0">
 
       <!-- Nav Item - Dashboard -->
-      <li class="nav-item active">
+      <li class="nav-item">
         <a class="nav-link" href="#">
           <i class="fas fa-fw fa-tachometer-alt"></i>
           <span>Dashboard</span></a>
@@ -74,8 +81,8 @@ if (!isset($_SESSION["login_admin"])) {
           <span>Kelola Produk</span></a>
       </li>
       <!-- Nav Item - Kelola Transaksi -->
-      <li class="nav-item">
-        <a class="nav-link" href="daftar_transaksi.php">
+      <li class="nav-item active">
+        <a class="nav-link" href="#.php">
           <i class="fas fa-fw fa-table"></i>
           <span>Kelola Transaksi</span></a>
       </li>
@@ -123,17 +130,88 @@ if (!isset($_SESSION["login_admin"])) {
         <div class="container-fluid">
 
           <!-- Page Heading -->
-          <div class="d-sm-flex align-items-center justify-content-between">
-            <div class="card bg-dark text-white">
-              <img src="../images/about.jpg" class="card-img" alt="..." style="height: 500px; width: 1000px;">
-            </div>
+          <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 class="h3 mb-0 text-gray-800">Data Transaksi</h1>
           </div>
 
+          <!-- Content Row -->
+          <!-- Data Table -->
+          <div class="card shadow mb-4">
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-bordered" id="myTable" width="100%" cellspacing="0">
+                  <thead>
+                    <tr>
+                      <th width=5%>No</th>
+                      <th>Nomor Transaksi</th>
+                      <th>Nama Pelanggan</th>
+                      <th>Tanggal Transaksi</th>
+                      <th>Total Bayar</th>
+                      <th>Bukti Bayar</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <?php foreach ($sql_produk as $transaksi) : ?>
+                      <tr>
+                        <th class="text-center"><?= $no; ?></th>
+                        <th><?= $transaksi['id_pesanan']; ?></th>
+                        <th><?= $transaksi['nama_user']; ?></th>
+                        <th><?= $transaksi['tanggal_transaksi']; ?></th>
+                        <th><?= 'Rp. ' . number_format($transaksi['total_transaksi']); ?></th>
+                        <th>
+                          <!-- Button trigger modal -->
+                          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#lihatbuktiModal<?= $transaksi['id_transaksi'] ?>">
+                            Lihat Bukti
+                          </button>
+
+                          <!-- Modal -->
+                          <div class="modal fade" id="lihatbuktiModal<?= $transaksi['id_transaksi'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h5 class="modal-title" id="exampleModalLabel">Bukti Pembayaran</h5>
+                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                  </button>
+                                </div>
+                                <div class="modal-body">
+                                  <div class="card bg-dark text-white">
+                                    <img src="../images/bukti_bayar/<?= $transaksi['bukti_bayar']; ?>" class="card-img" alt="...">
+                                  </div>
+                                </div>
+                                <div class="modal-footer">
+                                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </th>
+                        <th><?= $transaksi['status']; ?></th>
+                      </tr>
+                    <?php
+                      $no++;
+                    endforeach ?>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
         </div>
         <!-- /.container-fluid -->
 
       </div>
       <!-- End of Main Content -->
+
+      <!-- Footer -->
+      <footer class="sticky-footer bg-white">
+        <div class="container my-auto">
+          <div class="copyright text-center my-auto">
+            <span>Copyright &copy; Science Coffee 2023</span>
+          </div>
+        </div>
+      </footer>
+      <!-- End of Footer -->
 
     </div>
     <!-- End of Content Wrapper -->
@@ -165,6 +243,7 @@ if (!isset($_SESSION["login_admin"])) {
     </div>
   </div>
 
+
   <!-- Bootstrap core JavaScript-->
   <script src="../sbadmin/vendor/jquery/jquery.min.js"></script>
   <script src="../sbadmin/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -175,12 +254,33 @@ if (!isset($_SESSION["login_admin"])) {
   <!-- Custom scripts for all pages-->
   <script src="../sbadmin/js/sb-admin-2.min.js"></script>
 
-  <!-- Page level plugins -->
-  <script src="../sbadmin/vendor/chart.js/Chart.min.js"></script>
+  <!-- Datatables -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+  <script src="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.13.4/b-2.3.6/b-colvis-2.3.6/b-html5-2.3.6/b-print-2.3.6/datatables.min.js"></script>
 
-  <!-- Page level custom scripts -->
-  <script src="../sbadmin/js/demo/chart-area-demo.js"></script>
-  <script src="../sbadmin/js/demo/chart-pie-demo.js"></script>
+  <script>
+    $(document).ready(function() {
+      $('#myTable').DataTable({
+        dom: 'Bfrtip',
+        buttons: [{
+            extend: 'excelHtml5',
+            title: 'Data Transaksi',
+            exportOptions: {
+              columns: [0, 1, 2, 3, 4, 5, 7]
+            }
+          },
+          {
+            extend: 'pdfHtml5',
+            title: 'Data Transaksi',
+            exportOptions: {
+              columns: [0, 1, 2, 3, 4, 5, 7]
+            }
+          }
+        ]
+      });
+    });
+  </script>
 
 </body>
 

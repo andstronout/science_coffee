@@ -1,6 +1,9 @@
 <?php
 session_start();
 require "config.php";
+if (!isset($_SESSION['login_pelanggan'])) {
+  header("location:login.php");
+}
 $conn = koneksi();
 $id = $_SESSION['id_pelanggan'];
 $sql = $conn->query("SELECT * FROM cart INNER JOIN produk ON cart.id_produk=produk.id_produk WHERE id_user='$id'");
