@@ -267,14 +267,14 @@ $no = 1;
             extend: 'excelHtml5',
             title: 'Data Transaksi',
             exportOptions: {
-              columns: [0, 1, 2, 3, 4, 5, 7]
+              columns: [0, 1, 2, 3, 4, 6]
             }
           },
           {
             extend: 'pdfHtml5',
             title: 'Data Transaksi',
             exportOptions: {
-              columns: [0, 1, 2, 3, 4, 5, 7]
+              columns: [0, 1, 2, 3, 4, 6]
             }
           }
         ]

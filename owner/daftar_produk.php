@@ -241,14 +241,14 @@ $no = 1;
             extend: 'excelHtml5',
             title: 'Data Produk',
             exportOptions: {
-              columns: [0, 1, 2, 3, 4, 5]
+              columns: [0, 1, 2, 3, 4]
             }
           },
           {
             extend: 'pdfHtml5',
             title: 'Data Produk',
             exportOptions: {
-              columns: [0, 1, 2, 3, 4, 5]
+              columns: [0, 1, 2, 3, 4]
             }
           }
         ]

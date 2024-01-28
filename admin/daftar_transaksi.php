@@ -147,6 +147,7 @@ $no = 1;
                       <th>Nama Pelanggan</th>
                       <th>Tanggal Transaksi</th>
                       <th>Total Bayar</th>
+                      <th>Nomor Meja</th>
                       <th>Bukti Bayar</th>
                       <th>Status</th>
                       <th width=14% class="text-center">Aksi</th>
@@ -160,6 +161,7 @@ $no = 1;
                         <th><?= $transaksi['nama_user']; ?></th>
                         <th><?= $transaksi['tanggal_transaksi']; ?></th>
                         <th><?= 'Rp. ' . number_format($transaksi['total_transaksi']); ?></th>
+                        <th><?= $transaksi['no_meja']; ?></th>
                         <th>
                           <!-- Button trigger modal -->
                           <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#lihatbuktiModal<?= $transaksi['id_transaksi'] ?>">
@@ -283,14 +285,14 @@ $no = 1;
             extend: 'excelHtml5',
             title: 'Data Transaksi',
             exportOptions: {
-              columns: [0, 1, 2, 3, 4, 5, 7]
+              columns: [0, 1, 2, 3, 4, 6]
             }
           },
           {
             extend: 'pdfHtml5',
             title: 'Data Transaksi',
             exportOptions: {
-              columns: [0, 1, 2, 3, 4, 5, 7]
+              columns: [0, 1, 2, 3, 4, 6]
             }
           }
         ]

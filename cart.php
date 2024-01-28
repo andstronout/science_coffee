@@ -86,7 +86,7 @@ $sql = $conn->query("SELECT * FROM cart INNER JOIN produk ON cart.id_produk=prod
 
           <div class="col-md-7 col-sm-12 text-center ftco-animate">
             <h1 class="mb-3 mt-5 bread">Cart</h1>
-            <p class="breadcrumbs"><span class="mr-2"><a href="index.html">Home</a></span> <span>Cart</span></p>
+            <p class="breadcrumbs"><span class="mr-2"><a href="#">Home</a></span> <span>Cart</span></p>
           </div>
 
         </div>
@@ -156,6 +156,14 @@ $sql = $conn->query("SELECT * FROM cart INNER JOIN produk ON cart.id_produk=prod
         </div>
       </div>
       <div class="row justify-content-end">
+        <div class="col col-lg-3 col-md-6 mt-5 cart-wrap ftco-animate">
+          <div class="cart-total mb-3">
+            <h3>Masih mau pilih menu?</h3>
+            <p class="d-flex">
+            </p>
+          </div>
+          <p class="text-center"><a href="index.php#menu" class="btn btn-outline-primary py-3 px-4">Kembali ke daftar menu</a></p>
+        </div>
         <div class="col col-lg-3 col-md-6 mt-5 cart-wrap ftco-animate">
           <div class="cart-total mb-3">
             <h3>Cart Totals</h3>

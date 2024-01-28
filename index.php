@@ -64,7 +64,7 @@ $sql_produk = $conn->query("SELECT * FROM produk");
             $user = $sql_user->fetch_assoc();
             ?>
             <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="room.html" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Halo <?= $user['nama_user']; ?></a>
+              <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Halo <?= $user['nama_user']; ?></a>
               <div class="dropdown-menu" aria-labelledby="dropdown04">
                 <a class="dropdown-item" href="pesanan_saya.php">Pesanan Saya</a>
                 <a class="dropdown-item" href="ubah_profil.php">Ubah Profil</a>
@@ -181,7 +181,7 @@ $sql_produk = $conn->query("SELECT * FROM produk");
                                   <input type="hidden" name="id_produk" value="<?= $produk['id_produk']; ?>">
                                   <div class="d-md-flex">
                                     <div class="form-group" style="background-color:#37393b">
-                                      <input type="number" value="1" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))" name="qty_cart" class="form-control text-center" style="width: 40px;">
+                                      <input type="number" min="1" value="1" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))" name="qty_cart" class="form-control text-center" style="width: 40px;">
                                     </div>
                                     <div class="form-group ml-md-4">
                                       <?php if ($produk['qty_produk'] == 0) { ?>
