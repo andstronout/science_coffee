@@ -3,11 +3,22 @@ session_start();
 require "config.php";
 $conn = koneksi();
 
+$sql_produk = $conn->query("SELECT * FROM produk");
+$limit = $sql_produk->fetch_assoc();
+
 if (isset($_POST["submit"])) {
-  $cart = cart();
+  if ($limit['qty_produk'] < $_POST["qty_cart"]) {
+    echo "
+        <script>
+        alert('Maaf, Pesanan anda melewati jumlah stok kami');
+        document.location.href = 'index.php';
+        </script>
+        ";
+  } else {
+    $cart = cart();
+  }
 }
 
-$sql_produk = $conn->query("SELECT * FROM produk");
 ?>
 
 <!DOCTYPE html>

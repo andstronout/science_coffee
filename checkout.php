@@ -163,14 +163,14 @@ if (isset($_POST["submit"])) {
                   <div class="select-wrap">
                     <div class="icon"><span class="ion-ios-arrow-down"></span></div>
                     <select name="no_meja" id="" class="form-control">
-                      <option value="A1">A1</option>
-                      <option value="A2">A2</option>
-                      <option value="A3">A3</option>
-                      <option value="A4">A4</option>
-                      <option value="B1">B1</option>
-                      <option value="B2">B2</option>
-                      <option value="B3">B3</option>
-                      <option value="B4">B4</option>
+                      <option class="text-dark" value="A1">A1</option>
+                      <option class="text-dark" value="A2">A2</option>
+                      <option class="text-dark" value="A3">A3</option>
+                      <option class="text-dark" value="A4">A4</option>
+                      <option class="text-dark" value="B1">B1</option>
+                      <option class="text-dark" value="B2">B2</option>
+                      <option class="text-dark" value="B3">B3</option>
+                      <option class="text-dark" value="B4">B4</option>
                     </select>
                   </div>
                 </div>

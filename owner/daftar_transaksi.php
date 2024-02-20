@@ -109,7 +109,7 @@ $no = 1;
             <!-- Nav Item - User Information -->
             <li class="nav-item dropdown no-arrow">
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Halo Admin</span>
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Halo Owner</span>
               </a>
               <!-- Dropdown - User Information -->
               <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
@@ -138,6 +138,35 @@ $no = 1;
           <!-- Data Table -->
           <div class="card shadow mb-4">
             <div class="card-body">
+              <form class="row g-3" action="" method="post">
+                <div class="col-auto">
+                  <label for="">Dari Tanggal</label>
+                  <input type="date" class="form-control" name="t_awal" required>
+                </div>
+                <div class="col-auto">
+                  <label for="">Ke Tanggal</label>
+                  <input type="date" class="form-control" name="t_akhir" required>
+                </div>
+                <div class="col-auto mt-4">
+                  <button type="submit" class="btn btn-secondary btn-sm" name="simpan">Simpan</button>
+                  <a href="daftar_transaksi.php" class="btn btn-outline-secondary btn-sm">Reset</a>
+                </div>
+              </form>
+              <?php
+              if (isset($_POST['simpan'])) {
+                // var_dump($_POST["t_awal"], $_POST["t_akhir"]);
+                $_SESSION["awal"] = $_POST["t_awal"];
+                $_SESSION["akhir"] = $_POST["t_akhir"];
+                $sql_produk = sql("SELECT * FROM transaksi 
+                INNER JOIN user ON transaksi.id_user=user.id_user 
+                WHERE transaksi.tanggal_transaksi BETWEEN '$_SESSION[awal]' AND '$_SESSION[akhir]'
+                ORDER BY transaksi.tanggal_transaksi
+                ");
+              } else {
+                $sql_produk = sql("SELECT * FROM transaksi INNER JOIN user ON transaksi.id_user=user.id_user ORDER BY `transaksi`.`tanggal_transaksi` DESC");
+              }
+              ?>
+              <br>
               <div class="table-responsive">
                 <table class="table table-bordered" id="myTable" width="100%" cellspacing="0">
                   <thead>

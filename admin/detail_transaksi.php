@@ -8,22 +8,28 @@ $id = $_GET["id"];
 $sql_produk = sql("SELECT * FROM detail_transaksi INNER JOIN produk ON detail_transaksi.id_produk=produk.id_produk WHERE id_transaksi='$id'");
 $no = 1;
 
-$cek = sql("SELECT `status` FROM transaksi WHERE id_transaksi='$id'");
+$cek = sql("SELECT * FROM transaksi WHERE id_transaksi='$id'");
 $hasil = $cek->fetch_assoc();
+
+$potong = $sql_produk->fetch_assoc();
+
+$total_potong = $potong['qty_produk'] - $potong['qty_transaksi'];
+$id_produk = $potong['id_produk'];
 
 if (isset($_POST["belum"])) {
   $update_transaksi = sql("UPDATE transaksi SET `status`='Sedang Diproses' WHERE id_transaksi='$id'");
   echo "
         <script>
-        alert('Data berhasil Ditambahkan');
+        alert('Pesanan Berhasil Diproses');
         document.location.href = 'daftar_transaksi.php';
         </script>
         ";
 } elseif (isset($_POST["selesai"])) {
   $update_transaksi = sql("UPDATE transaksi SET `status`='Selesai Diproses' WHERE id_transaksi='$id'");
+  $update_produk = sql("UPDATE produk SET qty_produk=$total_potong WHERE id_produk='$id_produk'");
   echo "
         <script>
-        alert('Data berhasil Ditambahkan');
+        alert('Pesanan Dikirim');
         document.location.href = 'daftar_transaksi.php';
         </script>
         ";
@@ -96,7 +102,7 @@ if (isset($_POST["belum"])) {
       </li>
       <!-- Nav Item - Kelola Produk -->
       <li class="nav-item">
-        <a class="nav-link" href="#">
+        <a class="nav-link" href="daftar_produk.php">
           <i class="fas fa-fw fa-table"></i>
           <span>Kelola Produk</span></a>
       </li>
@@ -187,6 +193,7 @@ if (isset($_POST["belum"])) {
                   <button type="sumbit" name="belum" class="btn btn-outline-primary">
                     Proses Pesanan
                   </button>
+                  <a href="../struk.php?id=<?= $hasil['id_transaksi']; ?>" class="btn btn-outline-info">Cetak Struk</a>
                 <?php } elseif ($hasil['status'] == 'Sedang Diproses') { ?>
                   <button type="submit" name="selesai" class="btn btn-outline-primary">
                     Kirim Pesanan
